@@ -3,525 +3,661 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>塞内加尔消费者地图 | 用户洞察与 GTM 操盘</title>
+    <title>塞内加尔消费者地图 | GTM 操盘手看板</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --primary-color: #00805b; /* 塞内加尔绿 */
-            --secondary-color: #e31b23; /* 塞内加尔红 */
-            --accent-color: #fdef42; /* 塞内加尔黄 */
-            --bg-color: #f4f6f8;
-            --card-bg: #ffffff;
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
-            --border-color: #e5e7eb;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #00563f 0%, #00805b 100%);
-            color: white;
-            padding: 28px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        header h1 {
-            margin: 0 0 10px 0;
-            font-size: 28px;
-        }
-
-        header p {
-            margin: 0 0 16px 0;
-            opacity: 0.9;
-            font-size: 15px;
-        }
-
-        .header-metrics {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .metric-badge {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            backdrop-filter: blur(4px);
-        }
-
-        /* Tabs System */
-        .tabs-nav {
-            display: flex;
-            gap: 8px;
-            background: var(--card-bg);
-            padding: 8px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 20px;
-            overflow-x: auto;
-        }
-
-        .tab-btn {
-            padding: 10px 20px;
-            border: none;
-            background: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-muted);
-            white-space: nowrap;
-            transition: all 0.2s ease;
-        }
-
-        .tab-btn:hover {
-            color: var(--primary-color);
-            background: rgba(0, 128, 91, 0.05);
-        }
-
         .tab-btn.active {
-            background: var(--primary-color);
+            background-color: #0284c7;
             color: white;
+            font-weight: 600;
         }
-
-        /* Tab Content */
         .tab-content {
             display: none;
-            animation: fadeIn 0.3s ease;
         }
-
         .tab-content.active {
             display: block;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Cards & Tables */
-        .card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        .card h2 {
-            margin-top: 0;
-            color: var(--primary-color);
-            font-size: 20px;
-            border-bottom: 2px solid rgba(0,128,91,0.1);
-            padding-bottom: 8px;
-        }
-
-        .card h3 {
-            font-size: 16px;
-            color: var(--text-main);
-            margin-top: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            font-size: 14px;
-        }
-
-        th, td {
-            padding: 12px 14px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        th {
-            background-color: #f8fafc;
-            font-weight: 600;
-            color: #475569;
-        }
-
-        tr:hover {
-            background-color: #f8fafc;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .tag-est { background: #e0f2fe; color: #0369a1; }
-        .tag-real { background: #dcfce7; color: #15803d; }
-
-        /* Grid Layouts */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 16px;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
-        }
-
-        .feature-box {
-            background: #f8fafc;
-            border-left: 4px solid var(--primary-color);
-            padding: 14px;
-            border-radius: 0 8px 8px 0;
-            margin-bottom: 12px;
-        }
-
-        .feature-box h4 {
-            margin: 0 0 4px 0;
-            font-size: 15px;
-        }
-
-        .feature-box p {
-            margin: 0;
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: var(--text-muted);
-            font-size: 13px;
-        }
     </style>
 </head>
-<body>
+<body class="bg-slate-100 font-sans text-slate-800 antialiased p-4 md:p-6">
 
-<div class="container">
-    <!-- Header -->
-    <header>
-        <h1>塞内加尔消费者地图 (Senegal Consumer Profile)</h1>
-        <p>基于「用户洞察 GTM 操盘」四阶段方法论 · 社会分层底座 × 价位段前置约束 × 现金流节奏 × 三圈作战单元</p>
-        <div class="header-metrics">
-            <span class="metric-badge">📅 2026年8月版</span>
-            <span class="metric-badge">👥 人口 ≈ 1,803 万 (RGPH-5)</span>
-            <span class="metric-badge">🏙️ 城镇化率 49.2%</span>
-            <span class="metric-badge">💱 1 USD ≈ 610 XOF (FCFA)</span>
-            <span class="metric-badge">📱 智能机年大盘 ≈ 180万–200万台</span>
+    <!-- 顶部 Banner Header -->
+    <div class="bg-gradient-to-r from-teal-700 via-cyan-700 to-sky-700 rounded-xl p-6 text-white shadow-lg mb-6">
+        <h1 class="text-3xl font-bold tracking-tight mb-2">塞内加尔消费者地图</h1>
+        <p class="text-teal-100 text-sm md:text-base mb-4">
+            基于「用户洞察 GTM 操盘」四阶段方法论 · 社会分层底座 × 价位段前置约束 × 三圈作战单元 × Delta 人心机会。<br>
+            服务于 TECNO / Infinix / itel 塞内加尔国家盘：底部守盘（$60–120）· 腰部抢量（$120–220）· 中高端要利（$220+）。
+        </p>
+        <div class="flex flex-wrap gap-2 text-xs md:text-sm font-medium">
+            <span class="bg-white/20 px-3 py-1 rounded-full border border-white/30">2026年8月版</span>
+            <span class="bg-white/20 px-3 py-1 rounded-full border border-white/30">人口 1,820万 (ANSD 2026)</span>
+            <span class="bg-white/20 px-3 py-1 rounded-full border border-white/30">城镇化率 49.2%</span>
+            <span class="bg-white/20 px-3 py-1 rounded-full border border-white/30">1 USD ≈ 600 XOF</span>
+            <span class="bg-white/20 px-3 py-1 rounded-full border border-white/30">智能机年大盘 ≈ 150万台</span>
         </div>
-    </header>
-
-    <!-- Navigation Tabs -->
-    <div class="tabs-nav">
-        <button class="tab-btn active" onclick="switchTab('tab0')">0. 方法论与框架</button>
-        <button class="tab-btn" onclick="switchTab('tab1')">1. 社会分层与价位段</button>
-        <button class="tab-btn" onclick="switchTab('tab2')">2. 职业全景与现金流</button>
-        <button class="tab-btn" onclick="switchTab('tab3')">3. GTM 策略与三圈战场</button>
-        <button class="tab-btn" onclick="switchTab('tab4')">4. 数据来源与口径</button>
     </div>
 
-    <!-- TAB 0: 方法论 -->
-    <div id="tab0" class="tab-content active">
-        <div class="card">
-            <h2>0. 方法论锚：塞内加尔地图的构建逻辑</h2>
-            <p>坚决遵循<b>“价位段是消费者地图的根本约束”</b>，杜绝脱离价格谈人群。塞内加尔作为西非非正规经济高占比（约 85%）且拥有强侨汇经济（Remittance）的代表性市场，其人口分层不取决于单纯的“职位”，而取决于<b>现金流来源与稳定性</b>。</p>
-            
-            <h3>五步 AI 对话法落地</h3>
-            <div class="grid-3">
-                <div class="feature-box">
-                    <h4>① 分层比例</h4>
-                    <p>基于世行贫困线与国家统计局 ANSD 收入数据切分 6 层结构。</p>
-                </div>
-                <div class="feature-box">
-                    <h4>② 典型职业</h4>
-                    <p>覆盖 Jakartaman 摩的司机、花生季农、Modou-Modou 侨眷、公务员及商界精英。</p>
-                </div>
-                <div class="feature-box">
-                    <h4>③ 现金全景</h4>
-                    <p>重构日结、月薪、农忙季与侨汇/宗教节庆脉冲（Grand Magal / Tabaski）。</p>
-                </div>
-            </div>
+    <!-- 导航选项卡 Tab Menu -->
+    <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-300 pb-3">
+        <button onclick="switchTab('tab-0')" class="tab-btn active px-4 py-2 rounded-lg bg-white text-slate-700 text-sm shadow-sm hover:bg-slate-200 transition">方法论锚</button>
+        <button onclick="switchTab('tab-1')" class="tab-btn px-4 py-2 rounded-lg bg-white text-slate-700 text-sm shadow-sm hover:bg-slate-200 transition">① 分层底座</button>
+        <button onclick="switchTab('tab-1c')" class="tab-btn px-4 py-2 rounded-lg bg-white text-slate-700 text-sm shadow-sm hover:bg-slate-200 transition">①c 职业全景</button>
+        <button onclick="switchTab('tab-2')" class="tab-btn px-4 py-2 rounded-lg bg-white text-slate-700 text-sm shadow-sm hover:bg-slate-200 transition">② 人群×价位段地图</button>
+        <button onclick="switchTab('tab-3')" class="tab-btn px-4 py-2 rounded-lg bg-white text-slate-700 text-sm shadow-sm hover:bg-slate-200 transition">③ 八大作战人群</button>
+        <button onclick="switchTab('tab-4')" class="tab-btn px-4 py-2 rounded-lg bg-white text-slate-700 text-sm shadow-sm hover:bg-slate-200 transition">④ 三圈与分盘</button>
+        <button onclick="switchTab('tab-5')" class="tab-btn px-4 py-2 rounded-lg bg-white text-slate-700 text-sm shadow-sm hover:bg-slate-200 transition">⑤ 四象限资源分配</button>
+        <button onclick="switchTab('tab-6')" class="tab-btn px-4 py-2 rounded-lg bg-white text-slate-700 text-sm shadow-sm hover:bg-slate-200 transition">⑥ Delta 人心机会</button>
+        <button onclick="switchTab('tab-7')" class="tab-btn px-4 py-2 rounded-lg bg-white text-slate-700 text-sm shadow-sm hover:bg-slate-200 transition">⑦ 落地打法表</button>
+        <button onclick="switchTab('tab-cal')" class="tab-btn px-4 py-2 rounded-lg bg-amber-500 text-white font-semibold text-sm shadow-sm hover:bg-amber-600 transition">⚙️ 容量校准器</button>
+    </div>
 
-            <h3>华为 2.0 经验迁移：极简三维扫描</h3>
-            <table>
+    <!-- TAB 0: 方法论锚 -->
+    <div id="tab-0" class="tab-content active bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-2">0 方法论锚：这张地图是怎么画出来的</h2>
+        <p class="text-sm text-slate-600 mb-4">核心原则：<span class="font-semibold text-slate-800">价位段是消费者地图的根本约束，脱离它讨论人群，所有结论失真。</span></p>
+        
+        <div class="mb-6">
+            <h3 class="font-bold text-sky-700 text-base mb-3">五步 AI 对话法（从社会结构 ➔ 人心机会）</h3>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-center text-xs md:text-sm">
+                <div class="bg-sky-50 border border-sky-200 p-3 rounded-lg"><div class="font-bold text-sky-800">① 分层比例</div><div class="text-slate-500 text-xs mt-1">各阶层人口占比</div></div>
+                <div class="bg-sky-50 border border-sky-200 p-3 rounded-lg"><div class="font-bold text-sky-800">② 典型职业</div><div class="text-slate-500 text-xs mt-1">每层代表性职业</div></div>
+                <div class="bg-sky-50 border border-sky-200 p-3 rounded-lg"><div class="font-bold text-sky-800">③ 职业全景</div><div class="text-slate-500 text-xs mt-1">生活/消费全貌</div></div>
+                <div class="bg-sky-50 border border-sky-200 p-3 rounded-lg"><div class="font-bold text-sky-800">④ 结构变量</div><div class="text-slate-500 text-xs mt-1">正在变化的信号</div></div>
+                <div class="bg-sky-50 border border-sky-200 p-3 rounded-lg"><div class="font-bold text-sky-800">⑤ 人心机会</div><div class="text-slate-500 text-xs mt-1">未被满足的诉求</div></div>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto mb-6">
+            <h3 class="font-bold text-sky-700 text-base mb-3">目标群体四道筛子</h3>
+            <table class="w-full text-xs md:text-sm text-left border-collapse">
                 <thead>
-                    <tr>
-                        <th>维度</th>
-                        <th>塞内加尔落地变量</th>
-                        <th>业务意义</th>
+                    <tr class="bg-slate-100 text-slate-700 border-b">
+                        <th class="p-2 border">筛子</th>
+                        <th class="p-2 border">课程要求</th>
+                        <th class="p-2 border">本图塞内加尔落地</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b>现金流/资金来源</b></td>
-                        <td>农业 / 城市非正规 / 领薪 / 商业 / <b>海外侨汇 (Modou-Modou)</b></td>
-                        <td>替代虚无的“职业标签”，侨汇为塞内加尔独特的高额购买力注入点。</td>
+                        <td class="p-2 border font-semibold">① 价位段（前置基础）</td>
+                        <td class="p-2 border">先定价位段，再谈人群</td>
+                        <td class="p-2 border">先切出 6 个价位段（功能机 $10–25 ➔ 高端 $400+），所有人群必须挂到价位段上</td>
                     </tr>
                     <tr>
-                        <td><b>价位段前置</b></td>
-                        <td>6 档 ($10 功能机 → $400+ 高端机)</td>
-                        <td>根本约束，所有人群必须挂挂钩至对应价位段。</td>
+                        <td class="p-2 border font-semibold">② MECE</td>
+                        <td class="p-2 border">相互独立，完全穷尽</td>
+                        <td class="p-2 border">用客观三维切分：现金流来源 × 达喀尔/大区城市/农村 × 月可支配收入。不用交叉标签。</td>
                     </tr>
                     <tr>
-                        <td><b>地理/渠道浓度</b></td>
-                        <td>大达喀尔 (Dakar) / 圣路易 (Saint-Louis) / 图巴 (Touba) / 瓦洛 (Thies/Kaolack) / 卡萨芒斯 (Ziguinchor)</td>
-                        <td>达喀尔占全国购买力 >50%；图巴为宗教与商业高现金流孤岛。</td>
+                        <td class="p-2 border font-semibold">③ 真实需求合集</td>
+                        <td class="p-2 border">群体内需求要能收敛</td>
+                        <td class="p-2 border">每层收敛到 1–2 个 KBF（关键购买因素），来自达喀尔及大区零售一线实地观察与问卷。</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border font-semibold">④ 浓度 + 辐射性</td>
+                        <td class="p-2 border">原点群体 ≥ 10万体量基数</td>
+                        <td class="p-2 border">只有满足 ≥ 10万且在社媒（TikTok/WhatsApp）有话语权的群体，才被列为“原点用户”。</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- TAB 1: 社会分层与价位段 -->
-    <div id="tab1" class="tab-content">
-        <div class="card">
-            <h2>1. 塞内加尔就业人口六层结构与手机消费映射</h2>
-            <p>塞内加尔非正规就业占比达 85.8%，领薪雇员仅占劳动力 12% 左右。<b>Wave 与 Orange Money 极高渗透率</b>显著降低了金融门槛。</p>
-            
-            <table>
+    <!-- TAB 1: 分层底座 -->
+    <div id="tab-1" class="tab-content bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">1 底座：塞内加尔就业人口六层结构</h2>
+        <p class="text-sm text-slate-600 mb-6">塞内加尔现状：非正规经济活跃人口占 80% 以上，领薪劳动者仅占少数，分层主轴是现金流的稳定性与来源。</p>
+
+        <div class="space-y-4">
+            <div class="bg-slate-50 p-4 rounded-lg border">
+                <div class="flex justify-between text-sm font-bold mb-1">
+                    <span>L1 贫困层（农村自给/季节性农工）</span>
+                    <span class="text-slate-600">≈ 42% · 约 764 万人 · 月收入 < 30,000 XOF ($50)</span>
+                </div>
+                <div class="w-full bg-slate-200 h-4 rounded-full overflow-hidden">
+                    <div class="bg-slate-400 h-full" style="width: 42%"></div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border">
+                <div class="flex justify-between text-sm font-bold mb-1">
+                    <span>L2 温饱层（城郊非正规谋生/小贩/摩的Jakartaman）</span>
+                    <span class="text-slate-600">≈ 30% · 约 546 万人 · 月收入 30,000–90,000 XOF ($50–150)</span>
+                </div>
+                <div class="w-full bg-slate-200 h-4 rounded-full overflow-hidden">
+                    <div class="bg-sky-500 h-full" style="width: 30%"></div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border">
+                <div class="flex justify-between text-sm font-bold mb-1">
+                    <span>L3 小康层（微商/店主/教师/诊所护士/司机）</span>
+                    <span class="text-slate-600">≈ 18% · 约 327 万人 · 月收入 90,000–240,000 XOF ($150–400)</span>
+                </div>
+                <div class="w-full bg-slate-200 h-4 rounded-full overflow-hidden">
+                    <div class="bg-sky-700 h-full" style="width: 18%"></div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border">
+                <div class="flex justify-between text-sm font-bold mb-1">
+                    <span>L4 中产层（白领/外企员工/公务员/正规店主）</span>
+                    <span class="text-slate-600">≈ 7.5% · 约 136 万人 · 月收入 240,000–600,000 XOF ($400–1000)</span>
+                </div>
+                <div class="w-full bg-slate-200 h-4 rounded-full overflow-hidden">
+                    <div class="bg-emerald-600 h-full" style="width: 7.5%"></div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border">
+                <div class="flex justify-between text-sm font-bold mb-1">
+                    <span>L5 富裕层（大商户/进出口商/头部KOL/高级官员）</span>
+                    <span class="text-slate-600">≈ 2.0% · 约 36 万人 · 月收入 600,000–1,800,000 XOF ($1000–3000)</span>
+                </div>
+                <div class="w-full bg-slate-200 h-4 rounded-full overflow-hidden">
+                    <div class="bg-amber-500 h-full" style="width: 2%"></div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border">
+                <div class="flex justify-between text-sm font-bold mb-1">
+                    <span>L6 大资产层（政商精英/海外侨汇核心家族）</span>
+                    <span class="text-slate-600">≈ 0.5% · 约 9 万人 · 月收入 $3,000+</span>
+                </div>
+                <div class="w-full bg-slate-200 h-4 rounded-full overflow-hidden">
+                    <div class="bg-rose-600 h-full" style="width: 0.5%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 1c: 职业全景 -->
+    <div id="tab-1c" class="tab-content bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">1c 每层的职业全景与手机消费能力</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-xs md:text-sm text-left border-collapse">
                 <thead>
-                    <tr>
-                        <th>层级</th>
-                        <th>人口占比与规模</th>
-                        <th>月收入 (USD / XOF)</th>
-                        <th>手机预算上限</th>
-                        <th>换机周期</th>
-                        <th>主力存量机型</th>
-                        <th>支付方式特征</th>
+                    <tr class="bg-slate-100 text-slate-700 border-b">
+                        <th class="p-2 border">层级</th>
+                        <th class="p-2 border">典型职业</th>
+                        <th class="p-2 border">月收入 (XOF / USD)</th>
+                        <th class="p-2 border">手机预算上限</th>
+                        <th class="p-2 border">换机周期</th>
+                        <th class="p-2 border">现有存量机型</th>
+                        <th class="p-2 border">付款方式</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b>L1 贫困层</b><br><small>农村自给/季节农</small></td>
-                        <td>≈ 38%<br>(约 685 万人)</td>
-                        <td>&lt; $40<br>(&lt; 25,000 XOF) <span class="tag tag-est">估算</span></td>
-                        <td>$10–25<br>(P0 功能机)</td>
-                        <td>4–5 年</td>
-                        <td>功能机 (itel / TECNO T-series)、二手按键机</td>
-                        <td>全款现金 / 现货交易</td>
+                        <td class="p-2 border font-bold bg-slate-50">L1 贫困</td>
+                        <td class="p-2 border">自给型小农、花生种植农工、家庭无酬劳动者</td>
+                        <td class="p-2 border">< 30,000 XOF (< $50)</td>
+                        <td class="p-2 border">$8–25</td>
+                        <td class="p-2 border">4–5年 (用到坏)</td>
+                        <td class="p-2 border">功能机 (itel / T-series)、家庭二手机</td>
+                        <td class="p-2 border">全款现金</td>
                     </tr>
                     <tr>
-                        <td><b>L2 温饱层</b><br><small>城市非正规谋生</small></td>
-                        <td>≈ 32%<br>(约 577 万人)</td>
-                        <td>$40–120<br>(25,000–73,000 XOF) <span class="tag tag-real">实测</span></td>
-                        <td>$50–90<br>(P1 入门智能机)</td>
-                        <td>3–4 年</td>
-                        <td>二手安卓、TECNO POP、itel A系列、Infinix Smart</td>
-                        <td>Wave / Orange Money / 每日攒钱</td>
+                        <td class="p-2 border font-bold bg-slate-50">L2 温饱</td>
+                        <td class="p-2 border">Jakartaman(摩的)、市场小贩、建筑零工、家政</td>
+                        <td class="p-2 border">30k–90k XOF ($50–150)</td>
+                        <td class="p-2 border">$50–110</td>
+                        <td class="p-2 border">3–4年</td>
+                        <td class="p-2 border">二手安卓、入门 POP / itel / Infinix Smart</td>
+                        <td class="p-2 border">现金 / Wave 分期</td>
                     </tr>
                     <tr>
-                        <td><b>L3 小康层</b><br><small>基层领薪+小商户</small></td>
-                        <td>≈ 18%<br>(约 325 万人)</td>
-                        <td>$120–280<br>(73,000–170,000 XOF) <span class="tag tag-real">实测</span></td>
-                        <td>$90–160<br>(P2-P3 腰部量产机)</td>
-                        <td>2.5–3 年</td>
-                        <td>TECNO Spark / Infinix Hot / Samsung A05/A15</td>
-                        <td>Wave 转账 / 发薪日分期购买</td>
+                        <td class="p-2 border font-bold bg-slate-50">L3 小康</td>
+                        <td class="p-2 border">中小学教师、护士、出租车司机、微商店主</td>
+                        <td class="p-2 border">90k–240k XOF ($150–400)</td>
+                        <td class="p-2 border">$100–180</td>
+                        <td class="p-2 border">2.5–3年</td>
+                        <td class="p-2 border">Samsung A05/A15、Tecno Spark/Pova、Infinix Hot</td>
+                        <td class="p-2 border">Wave / Orange Money / 现金</td>
                     </tr>
                     <tr>
-                        <td><b>L4 中产层</b><br><small>专业白领+侨眷中层</small></td>
-                        <td>≈ 8.5%<br>(约 153 万人)</td>
-                        <td>$280–600<br>(170,000–366,000 XOF) <span class="tag tag-real">实测</span></td>
-                        <td>$160–300<br>(P3-P4 中高端)</td>
-                        <td>2–2.5 年</td>
-                        <td>TECNO Camon / Infinix Note / Samsung A25/A35 / 二手iPhone</td>
-                        <td>银行卡 + Wave + 信用卡/分期</td>
+                        <td class="p-2 border font-bold bg-slate-50">L4 中产</td>
+                        <td class="p-2 border">大学教师、医生、公務员、外企/NGO中层、正规商户</td>
+                        <td class="p-2 border">240k–600k XOF ($400–1000)</td>
+                        <td class="p-2 border">$220–350</td>
+                        <td class="p-2 border">2–2.5年</td>
+                        <td class="p-2 border">Samsung A35/A55、Camon 系列、二手 iPhone</td>
+                        <td class="p-2 border">Wave / 信用卡 / 银行分期</td>
                     </tr>
                     <tr>
-                        <td><b>L5 富裕层</b><br><small>大进出口商+中高管</small></td>
-                        <td>≈ 3.0%<br>(约 54 万人)</td>
-                        <td>$600–2,000<br>(366,000–1,220,000 XOF) <span class="tag tag-est">估算</span></td>
-                        <td>$300–600<br>(P5 次旗舰/旗舰)</td>
-                        <td>1.5–2 年</td>
-                        <td>iPhone 14/15、Samsung Galaxy S系列、TECNO Phantom</td>
-                        <td>银行转账 / 美元/欧元现金</td>
+                        <td class="p-2 border font-bold bg-slate-50">L5 富裕</td>
+                        <td class="p-2 border">大型进出口贸易商、头部KOL、高级官员、连锁店主</td>
+                        <td class="p-2 border">600k–1.8M XOF ($1000–3000)</td>
+                        <td class="p-2 border">$400–800</td>
+                        <td class="p-2 border">1.5–2年</td>
+                        <td class="p-2 border">Samsung S系列、iPhone (新/短龄)</td>
+                        <td class="p-2 border">银行卡 / 美元 / 现金</td>
                     </tr>
                     <tr>
-                        <td><b>L6 大资产层</b><br><small>政商精英/海外资本</small></td>
-                        <td>≈ 0.5%<br>(约 9 万人)</td>
-                        <td>$2,000+<br>(&gt; 1,220,000 XOF) <span class="tag tag-est">估算</span></td>
-                        <td>$800+<br>(顶配旗舰)</td>
-                        <td>1 年 (跟代)</td>
-                        <td>iPhone Pro Max / Galaxy Ultra / 折叠屏</td>
-                        <td>法国/境外直接购买</td>
+                        <td class="p-2 border font-bold bg-slate-50">L6 大资产</td>
+                        <td class="p-2 border">政商精英、大型财团业主、海外高薪回流资本</td>
+                        <td class="p-2 border">1.8M+ XOF ($3000+)</td>
+                        <td class="p-2 border">$800+</td>
+                        <td class="p-2 border">1–1.5年</td>
+                        <td class="p-2 border">iPhone Pro Max / Galaxy S Ultra</td>
+                        <td class="p-2 border">境外购买 / 刷卡</td>
                     </tr>
                 </tbody>
             </table>
-            
-            <div class="feature-box">
-                <b>关键消费约束：</b>塞内加尔家庭食品支出约占 <b>48.3%</b>（农村超 55%）。流量资费约为 <b>$1.2–1.8 / GB</b>（远低于几内亚），TikTok 和 WhatsApp 渗透率极高，<b>对大屏幕、好摄像头、大电池和流畅网络体验有强烈的显性需求</b>。
-            </div>
         </div>
     </div>
 
-    <!-- TAB 2: 职业全景与现金流 -->
-    <div id="tab2" class="tab-content">
-        <div class="card">
-            <h2>2. 职业全景：塞内加尔人群的 5 大现金流节奏</h2>
-            <p>在塞内加尔做 GTM 促销排期，必须紧扣以下五类资金到手的时间节点：</p>
-            
-            <div class="grid-2">
-                <div class="card" style="border-left: 4px solid #00805b;">
-                    <h3>1. 日结型 (Daily Cash)</h3>
-                    <p><b>典型职业：</b>Jakartaman 摩的司机、街头小贩 (Marchand Ambulant)、渔民、家政工。</p>
-                    <p><b>特征：</b>每天到手 3,000–8,000 XOF。钱随时有，但极难攒大钱。</p>
-                    <p><b>购买痛点：</b>手机续航 (整天在外)、超高音量、耐摔、闪充。依赖 Wave 小额蓄水攒钱买机。</p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #e31b23;">
-                    <h3>2. 周结型 (Weekly Cash)</h3>
-                    <p><b>典型职业：</b>建筑小工、木工、汽车修理工、物流搬运工。</p>
-                    <p><b>特征：</b>周六结算工资。周六晚至周日是线下零售与体验店的关键转化窗口。</p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #fdef42;">
-                    <h3>3. 月末发薪型 (Payday Wave)</h3>
-                    <p><b>典型职业：</b>教师、护士、政府公务员、电信/银行白领。</p>
-                    <p><b>特征：</b>全国约 200 万人有确定发薪日（25日–次月2日）。<b>唯一能用公历日历做发薪日营销 (Payday Campaign) 的人群。</b></p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #0284c7;">
-                    <h3>4. 农业/季节性爆发 (Harvest Surge)</h3>
-                    <p><b>典型职业：</b>花生 (Arachide) 种植农户、腰果农、沿海捕鱼船主。</p>
-                    <p><b>特征：</b>每年 12 月至次年 3 月为花生收购季（Campagne Arachidière），集中释放全年的手机换购资金。</p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #7c3aed; grid-column: span 2;">
-                    <h3>5. 侨汇与宗教节庆脉冲 (Remittance & Religious Surge) ⭐ 塞内加尔最大特色</h3>
-                    <p><b>核心人群：</b>Modou-Modou（欧美/旅法侨民）国内家眷、宗教信徒。</p>
-                    <p><b>爆发节点：</b>
-                        <ul>
-                            <li><b>Grand Magal de Touba (图巴大麦加朝圣)：</b>数百万信徒汇聚图巴，侨汇与本地消费双重爆发，高端与中端手机销售旺季。</li>
-                            <li><b>Tabaski (宰牲节) & Korité (开斋节)：</b>海外侨胞通过 Wave / Western Union 大举汇款，全家换新机。</li>
-                        </ul>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- TAB 3: GTM 策略与三圈战场 -->
-    <div id="tab3" class="tab-content">
-        <div class="card">
-            <h2>3. GTM 作战策略与三圈作战单元</h2>
-            <p>结合 TECNO / Infinix 国家盘总体目标：<b>底部守量 ($50–110) · 腰部抢量 ($110–200) · 中高端要利 ($200+)</b>。</p>
-
-            <h3>塞内加尔三圈作战单元</h3>
-            <table>
+    <!-- TAB 2: 人群×价位段地图 -->
+    <div id="tab-2" class="tab-content bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">2 核心地图：人群 × 价位段适配矩阵</h2>
+        <div class="overflow-x-auto mb-6">
+            <table class="w-full text-xs md:text-sm text-center border-collapse">
                 <thead>
-                    <tr>
-                        <th>作战圈层</th>
-                        <th>核心覆盖区域</th>
-                        <th>目标人群结构</th>
-                        <th>主攻价位段与机型</th>
-                        <th>核心渠道与传播触点</th>
+                    <tr class="bg-slate-800 text-white">
+                        <th class="p-2 border">人群 \ 价位段</th>
+                        <th class="p-2 border">P0 功能机<br>$10–25</th>
+                        <th class="p-2 border">P1 入门智能<br>$50–80</th>
+                        <th class="p-2 border">P2 底座主力<br>$80–130</th>
+                        <th class="p-2 border">P3 腰部<br>$130–220</th>
+                        <th class="p-2 border">P4 中高端<br>$220–350</th>
+                        <th class="p-2 border">P5 高端<br>$400+</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b>原点圈 (Core)</b><br>高话语权与溢价区</td>
-                        <td>Dakar 核心区 (Plateau, Almadies, Mermoz, UCAD 大学城)</td>
-                        <td>L4-L6 中产及精英、大学青年、海归白领</td>
-                        <td><b>$200–400+</b><br>(Camon / Note / Phantom / Galaxy A35+)</td>
-                        <td>Shopping Mall 专卖店、TikTok 品牌KOL、Instagram、校园社团活动</td>
+                        <td class="p-2 border font-bold bg-slate-100">L1 贫困层</td>
+                        <td class="p-2 border bg-sky-800 text-white font-bold">主力<br>极致性价比</td>
+                        <td class="p-2 border bg-sky-200">边缘<br>偶尔换机</td>
+                        <td class="p-2 border bg-slate-100">—</td>
+                        <td class="p-2 border bg-slate-100">—</td>
+                        <td class="p-2 border bg-slate-100">—</td>
+                        <td class="p-2 border bg-slate-100">—</td>
                     </tr>
                     <tr>
-                        <td><b>辐射圈 (Radiant)</b><br>高密度跑量区</td>
-                        <td>大达喀尔郊区 (Pikine, Guédiawaye, Rufisque) + Thiès (蒂斯)</td>
-                        <td>L2-L3 城市小康、年轻工薪族、个体商户</td>
-                        <td><b>$110–200</b><br>(Spark / Hot / Galaxy A05-A15)</td>
-                        <td>街区路演、Wave / Orange 代理网点、KOC 短视频、WhatsApp 导购群</td>
+                        <td class="p-2 border font-bold bg-slate-100">L2 温饱层</td>
+                        <td class="p-2 border bg-sky-400 text-white">备用<br>工作耐用机</td>
+                        <td class="p-2 border bg-sky-800 text-white font-bold">首次智能机<br>核心转化池</td>
+                        <td class="p-2 border bg-sky-600 text-white">越级目标<br>攒钱/分期</td>
+                        <td class="p-2 border bg-slate-100">—</td>
+                        <td class="p-2 border bg-slate-100">—</td>
+                        <td class="p-2 border bg-slate-100">—</td>
                     </tr>
                     <tr>
-                        <td><b>扩容圈 (Expansion)</b><br>现金爆发与大盘守量区</td>
-                        <td>Touba (图巴), Kaolack (考拉克), Saint-Louis (圣路易), Ziguinchor (齐金绍尔)</td>
-                        <td>L1-L2 农村与小镇居民、花生季农户、朝圣人口</td>
-                        <td><b>$50–110</b><br>(POP / itel / Smart)</td>
-                        <td>每周集市 (Marché Hebdomadaire)、传统户外墙体广告、本地电台 (RTS/RFM)</td>
+                        <td class="p-2 border font-bold bg-slate-100">L3 小康层</td>
+                        <td class="p-2 border bg-slate-100">—</td>
+                        <td class="p-2 border bg-sky-200">下沉备用</td>
+                        <td class="p-2 border bg-sky-800 text-white font-bold">核心走量<br>Spark/Hot</td>
+                        <td class="p-2 border bg-sky-600 text-white">升级盘<br>Pova/Camon</td>
+                        <td class="p-2 border bg-sky-300">咬牙等一次</td>
+                        <td class="p-2 border bg-slate-100">—</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border font-bold bg-slate-100">L4 中产层</td>
+                        <td class="p-2 border bg-slate-100">—</td>
+                        <td class="p-2 border bg-slate-100">—</td>
+                        <td class="p-2 border bg-sky-200">给家人买</td>
+                        <td class="p-2 border bg-sky-600 text-white">务实选择</td>
+                        <td class="p-2 border bg-sky-800 text-white font-bold">主战场<br>Camon/A35</td>
+                        <td class="p-2 border bg-sky-400 text-white">二手 iPhone</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border font-bold bg-slate-100">L5 富裕层</td>
+                        <td class="p-2 border bg-slate-100">—</td>
+                        <td class="p-2 border bg-slate-100">—</td>
+                        <td class="p-2 border bg-slate-100">—</td>
+                        <td class="p-2 border bg-sky-200">员工机/批货</td>
+                        <td class="p-2 border bg-sky-400 text-white">送礼/备用</td>
+                        <td class="p-2 border bg-sky-800 text-white font-bold">主力<br>iPhone/S系</td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
 
-            <h3>Delta 人心机会 (未被满足的诉求)</h3>
-            <div class="grid-2">
-                <div class="feature-box">
-                    <h4>📸 人像美颜与暗光社媒拍照</h4>
-                    <p>塞内加尔青年极度热爱在 TikTok / Instagram 展示时尚与舞蹈，对深肤色人像优化、夜景人像拍摄有极高溢价认同。</p>
+    <!-- TAB 3: 八大作战人群 -->
+    <div id="tab-3" class="tab-content bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">3 八大作战人群（塞内加尔市场）</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            <!-- Card 1 -->
+            <div class="border rounded-xl p-4 bg-slate-50 relative">
+                <span class="absolute top-3 right-3 text-xs bg-sky-600 text-white px-2 py-0.5 rounded">基本盘</span>
+                <h3 class="font-bold text-slate-800 text-base mb-1">① 城镇领薪新基层</h3>
+                <div class="text-xs text-slate-500 mb-2">规模：约 65 万人 | 目标价位：$80–130</div>
+                <div class="text-xs space-y-1 mb-3">
+                    <div><span class="font-semibold">KBF：</span>大电池、双卡耐用、Wave转账流畅</div>
+                    <div><span class="font-semibold">核心渠道：</span>达喀尔/Thiès 沿街门店 + Orange/Wave 代理点</div>
                 </div>
-                <div class="feature-box">
-                    <h4>⚡ 快充与持久耐用</h4>
-                    <p>针对摩的司机与经常出差的商人，33W/45W 闪充 + 5000mAh 电池是击穿对手的关键卖点。</p>
+                <div class="space-y-1 text-xs">
+                    <div class="flex justify-between"><span>收入价值</span><span class="font-bold">6/10</span></div>
+                    <div class="flex justify-between"><span>换机价值</span><span class="font-bold">7/10</span></div>
+                    <div class="flex justify-between"><span>流量价值</span><span class="font-bold">5/10</span></div>
+                    <div class="flex justify-between"><span>辐射力</span><span class="font-bold">6/10</span></div>
                 </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="border rounded-xl p-4 bg-slate-50 relative">
+                <span class="absolute top-3 right-3 text-xs bg-sky-600 text-white px-2 py-0.5 rounded">辐射盘</span>
+                <h3 class="font-bold text-slate-800 text-base mb-1">② 摩的司机与流动零工</h3>
+                <div class="text-xs text-slate-500 mb-2">规模：约 80 万人 | 目标价位：$50–90</div>
+                <div class="text-xs space-y-1 mb-3">
+                    <div><span class="font-semibold">KBF：</span>防摔、续航强、防盗外壳</div>
+                    <div><span class="font-semibold">核心渠道：</span>车站聚集区、加油站、车队口碑</div>
+                </div>
+                <div class="space-y-1 text-xs">
+                    <div class="flex justify-between"><span>收入价值</span><span class="font-bold">4/10</span></div>
+                    <div class="flex justify-between"><span>换机价值</span><span class="font-bold">8/10</span></div>
+                    <div class="flex justify-between"><span>流量价值</span><span class="font-bold">7/10</span></div>
+                    <div class="flex justify-between"><span>辐射力</span><span class="font-bold">9/10</span></div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="border rounded-xl p-4 bg-slate-50 relative">
+                <span class="absolute top-3 right-3 text-xs bg-emerald-600 text-white px-2 py-0.5 rounded">原点/高价值</span>
+                <h3 class="font-bold text-slate-800 text-base mb-1">③ 城市专业人士与自雇者</h3>
+                <div class="text-xs text-slate-500 mb-2">规模：约 35 万人 | 目标价位：$220–350</div>
+                <div class="text-xs space-y-1 mb-3">
+                    <div><span class="font-semibold">KBF：</span>外观质感、夜景人像、内存空间</div>
+                    <div><span class="font-semibold">核心渠道：</span>达喀尔体验专卖店、TikTok/IG 官方品牌店</div>
+                </div>
+                <div class="space-y-1 text-xs">
+                    <div class="flex justify-between"><span>收入价值</span><span class="font-bold">9/10</span></div>
+                    <div class="flex justify-between"><span>换机价值</span><span class="font-bold">8/10</span></div>
+                    <div class="flex justify-between"><span>流量价值</span><span class="font-bold">9/10</span></div>
+                    <div class="flex justify-between"><span>辐射力</span><span class="font-bold">8/10</span></div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="border rounded-xl p-4 bg-slate-50 relative">
+                <span class="absolute top-3 right-3 text-xs bg-amber-600 text-white px-2 py-0.5 rounded">新势能/Delta</span>
+                <h3 class="font-bold text-slate-800 text-base mb-1">④ 城市青年与首购学生</h3>
+                <div class="text-xs text-slate-500 mb-2">规模：约 120 万人 | 目标价位：$80–150</div>
+                <div class="text-xs space-y-1 mb-3">
+                    <div><span class="font-semibold">KBF：</span>TikTok 拍摄流畅、潮流配色、高刷屏</div>
+                    <div><span class="font-semibold">核心渠道：</span>校园周围店、TikTok 挑战赛、KOL带货</div>
+                </div>
+                <div class="space-y-1 text-xs">
+                    <div class="flex justify-between"><span>收入价值</span><span class="font-bold">5/10</span></div>
+                    <div class="flex justify-between"><span>换机价值</span><span class="font-bold">9/10</span></div>
+                    <div class="flex justify-between"><span>流量价值</span><span class="font-bold">10/10</span></div>
+                    <div class="flex justify-between"><span>辐射力</span><span class="font-bold">9/10</span></div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="border rounded-xl p-4 bg-slate-50 relative">
+                <span class="absolute top-3 right-3 text-xs bg-purple-600 text-white px-2 py-0.5 rounded">未满足/潜力</span>
+                <h3 class="font-bold text-slate-800 text-base mb-1">⑤ 城市女性消费者</h3>
+                <div class="text-xs text-slate-500 mb-2">规模：约 50 万人 | 目标价位：$100–220</div>
+                <div class="text-xs space-y-1 mb-3">
+                    <div><span class="font-semibold">KBF：</span>美颜自拍、轻薄手感、时尚外观（Bazin匹配）</div>
+                    <div><span class="font-semibold">核心渠道：</span>美发店/集市社群、WhatsApp 朋友圈</div>
+                </div>
+                <div class="space-y-1 text-xs">
+                    <div class="flex justify-between"><span>收入价值</span><span class="font-bold">7/10</span></div>
+                    <div class="flex justify-between"><span>换机价值</span><span class="font-bold">8/10</span></div>
+                    <div class="flex justify-between"><span>流量价值</span><span class="font-bold">8/10</span></div>
+                    <div class="flex justify-between"><span>辐射力</span><span class="font-bold">7/10</span></div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="border rounded-xl p-4 bg-slate-50 relative">
+                <span class="absolute top-3 right-3 text-xs bg-rose-600 text-white px-2 py-0.5 rounded">高汇款/脉冲</span>
+                <h3 class="font-bold text-slate-800 text-base mb-1">⑥ 侨汇受益家庭</h3>
+                <div class="text-xs text-slate-500 mb-2">规模：约 40 万户 | 目标价位：$180–350</div>
+                <div class="text-xs space-y-1 mb-3">
+                    <div><span class="font-semibold">KBF：</span>大屏视频通话、品牌档次、售后保障</div>
+                    <div><span class="font-semibold">核心渠道：</span>Touba / Louga 大区网点、汇款网点旁</div>
+                </div>
+                <div class="space-y-1 text-xs">
+                    <div class="flex justify-between"><span>收入价值</span><span class="font-bold">8/10</span></div>
+                    <div class="flex justify-between"><span>换机价值</span><span class="font-bold">7/10</span></div>
+                    <div class="flex justify-between"><span>流量价值</span><span class="font-bold">6/10</span></div>
+                    <div class="flex justify-between"><span>辐射力</span><span class="font-bold">6/10</span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- TAB 4: 三圈与分盘 -->
+    <div id="tab-4" class="tab-content bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">4 分盘思维：基本盘 (守) × 核心盘 (攻)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-4 border border-sky-300 bg-sky-50/50 rounded-xl">
+                <h3 class="font-bold text-sky-800 text-lg mb-2">🛡️ 基本盘 (守) · P2 $80–130</h3>
+                <p class="text-xs text-slate-600 mb-3">把规模盘活下去，保证现金流与份额。底盘失守 = 全年份额失守。</p>
+                <ul class="text-xs space-y-1 text-slate-700 list-disc pl-4">
+                    <li>覆盖人群：L2 温饱层 + L3 小康层，合计约 870 万人</li>
+                    <li>价位段容量：约 65 万台/年 (占大盘 43%)</li>
+                    <li>产品：Spark 系列、Infinix Hot 系列</li>
+                    <li>打法：货权收拢 × Spark 锁扣组合 × 店主返利授权</li>
+                </ul>
+            </div>
+
+            <div class="p-4 border border-emerald-300 bg-emerald-50/50 rounded-xl">
+                <h3 class="font-bold text-emerald-800 text-lg mb-2">⚔️ 核心盘 (攻) · P4 $220–350</h3>
+                <p class="text-xs text-slate-600 mb-3">往上走、往高销突破，创造增量与势能。本质是人群结构升级。</p>
+                <ul class="text-xs space-y-1 text-slate-700 list-disc pl-4">
+                    <li>覆盖人群：L4 中产层 136 万人 + L5 富裕层 36 万人</li>
+                    <li>价位段容量：约 12 万台/年，但毛利贡献占比远高</li>
+                    <li>产品：Camon 50 系列 (Slim/Pro)</li>
+                    <li>打法：设计/轻薄/AI影像差异化 + 核心网点体验阵地</li>
+                </ul>
             </div>
         </div>
     </div>
 
-    <!-- TAB 4: 数据来源与口径 -->
-    <div id="tab4" class="tab-content">
-        <div class="card">
-            <h2>4. 数据来源与口径标注 (Data Sources & Methodology Notes)</h2>
-            <p>为保证本消费者地图的数据严谨性与操盘可校验性，相关数据分为<b>【实测/官方权威数据】</b>与<b>【建模估算数据】</b>两类：</p>
+    <!-- TAB 5: 四象限资源分配 -->
+    <div id="tab-5" class="tab-content bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">5 用户四象限：价值 × 忠诚/辐射 ➔ 资源优先级</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 border border-emerald-200 bg-emerald-50/30 rounded-xl">
+                <div class="font-bold text-emerald-800 text-base mb-1">🧱 垫方 (真朋友) · 高价值 · 高忠诚</div>
+                <div class="text-xs text-slate-600 mb-2">谁：达喀尔中产白领、TECNO 老用户升级盘、核心 MD 合作店主。</div>
+                <div class="text-xs font-semibold text-emerald-700">策略：重点维护，以旧换新通道，Camon 优先体验。</div>
+            </div>
 
-            <h3>1. 官方与机构实测数据 (Real Data)</h3>
-            <ul>
-                <li><b>人口总数与城镇化率：</b>源自塞内加尔国家统计与人口局 (ANSD) 第五次全国人口普查结果 (RGPH-5, 2023/2024)，全国人口约 1,803 万，城镇化率约为 49.2%。</li>
-                <li><b>贫困率与恩格尔系数：</b>源自世界银行 <i>Senegal Poverty & Equity Brief (2024)</i> 及 ANSD <i>EHCVM (家庭生活条件调查)</i>，全国贫困率 ($3.65/天标准) 约为 36.3%–38%，食品支出占比全国均值 48.3%。</li>
-                <li><b>就业结构与非正规比例：</b>源自国际劳工组织 (ILO) 与 ANSD <i>Enquête Nationale sur l'Emploi au Sénégal (ENES)</i>，非正规就业占总就业人口的 85.8%。</li>
-                <li><b>电信资费与移动支付：</b>源自 ARTP (塞内加尔电信邮政监管局) 季度报告与 GSMA Mobile Economy Report 2025，Wave 与 Orange Money 覆盖率超 80%。</li>
-            </ul>
+            <div class="p-4 border border-amber-200 bg-amber-50/30 rounded-xl">
+                <div class="font-bold text-amber-800 text-base mb-1">🦋 蝴蝶 · 高价值 · 低忠诚 (易流失)</div>
+                <div class="text-xs text-slate-600 mb-2">谁：三星摇摆用户、侨汇受惠家庭、年轻时尚追随者。</div>
+                <div class="text-xs font-semibold text-amber-700">策略：短期高投入，抓住 Tabaski (宰牲节) 与开学季大促快攻。</div>
+            </div>
 
-            <h3>2. 建模估算数据 (Estimated Data)</h3>
-            <ul>
-                <li><b>智能机年大盘 (≈180万–200万台)：</b>基于西非三区 (Senegal, Mali, Guinea) 品牌激活数据 (Sell-out/Activation)、海关进口数据以及 Canal/Retail 渠道实测回校验推算。</li>
-                <li><b>六层人口比例与收入区间：</b>结合世行收入阶梯划分、塞内加尔最低保障工资 (SMIG, 约 36,000 XOF/月)、教师/公务员薪资指南以及大达喀尔地区实际生活成本建模推算。</li>
-                <li><b>价位段容量划分：</b>基于市场主流品牌（TECNO, Infinix, Samsung, Apple, Xiaomi, itel）在塞内加尔大盘的实际出货量分布归纳。</li>
-            </ul>
+            <div class="p-4 border border-slate-200 bg-slate-50 rounded-xl">
+                <div class="font-bold text-slate-700 text-base mb-1">🪨 藤壶 · 低价值 · 高忠诚</div>
+                <div class="text-xs text-slate-600 mb-2">谁：农村功能机长期用户、T-series 存量用户。</div>
+                <div class="text-xs font-semibold text-slate-600">策略：降低服务成本，依靠自然流转与批发渠道。</div>
+            </div>
 
-            <h3>3. 汇率与计算基准</h3>
-            <p><b>基准汇率：</b>1 USD ≈ 610 XOF (西非法郎 FCFA)，取 2026 年市场平均基准水平。</p>
+            <div class="p-4 border border-rose-200 bg-rose-50/30 rounded-xl">
+                <div class="font-bold text-rose-800 text-base mb-1">🏃 路人 · 低价值 · 低忠诚</div>
+                <div class="text-xs text-slate-600 mb-2">谁：纯二手/C2C 交易用户、水货杂牌买家。</div>
+                <div class="text-xs font-semibold text-rose-700">策略：最小化投入，不做重点。</div>
+            </div>
         </div>
     </div>
 
-    <footer>
-        <p>塞内加尔消费者地图 · 基于用户洞察 GTM 操盘方法论 | 2026年8月</p>
-    </footer>
-</div>
+    <!-- TAB 6: Delta 人心机会 -->
+    <div id="tab-6" class="tab-content bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">6 Delta 人心机会：机会 = 变量</h2>
+        <div class="space-y-4 text-xs md:text-sm">
+            <div class="p-4 bg-sky-50 border border-sky-200 rounded-xl">
+                <div class="font-bold text-sky-800 text-base mb-1">① 金融支付 Delta：Wave 的零手续费普及</div>
+                <p class="text-slate-600">Wave 在塞内加尔渗透率极高，改变了非正规经济的现金流结算方式。机会点：绑定 Wave 提供扫码分期与购机福利，降低 $150+ 机型购机门槛。</p>
+            </div>
 
-<script>
-    function switchTab(tabId) {
-        // Hide all tabs
-        const contents = document.querySelectorAll('.tab-content');
-        contents.forEach(content => content.classList.remove('active'));
+            <div class="p-4 bg-sky-50 border border-sky-200 rounded-xl">
+                <div class="font-bold text-sky-800 text-base mb-1">② 生活方式 Delta：TikTok 爆发与女性内容表达</div>
+                <p class="text-slate-600">达喀尔年轻女性对自拍、Bazin 服饰展示、时尚视频需求井喷。机会点：打造专门针对女性的拍照/轻薄短视频宣发，借助 TikTok 本地 KOL 种草。</p>
+            </div>
+        </div>
+    </div>
 
-        // Deactivate all buttons
-        const buttons = document.querySelectorAll('.tab-btn');
-        buttons.forEach(btn => btn.classList.remove('active'));
+    <!-- TAB 7: 落地打法表 -->
+    <div id="tab-7" class="tab-content bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">7 落地打法表：人群 ➔ 机型 ➔ 渠道 ➔ 传播</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-100 text-slate-700 border-b">
+                        <th class="p-2 border">作战人群</th>
+                        <th class="p-2 border">价位段/机型</th>
+                        <th class="p-2 border">核心渠道</th>
+                        <th class="p-2 border">传播语言</th>
+                        <th class="p-2 border">季节脉冲</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p-2 border font-bold">① 城镇领薪新基层</td>
+                        <td class="p-2 border">P2 Spark 系列</td>
+                        <td class="p-2 border">达喀尔/Thiès 核心街店</td>
+                        <td class="p-2 border">电池能用两天，转账极速</td>
+                        <td class="p-2 border">发薪日、开学季 (9-10月)</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border font-bold">② 城市专业人士</td>
+                        <td class="p-2 border">P4 Camon 50 系列</td>
+                        <td class="p-2 border">品牌体验专卖店</td>
+                        <td class="p-2 border">最薄的时尚影像旗舰</td>
+                        <td class="p-2 border">年末、Tabaski 节日前</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-        // Show target tab
-        document.getElementById(tabId).classList.add('active');
+    <!-- TAB CAL: 容量校准器 (含 JavaScript 动态计算) -->
+    <div id="tab-cal" class="tab-content bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-amber-800 mb-2">⚙️ 容量校准器：把推演版改成实测版</h2>
+        <p class="text-xs text-slate-500 mb-4">输入你手上的逐机型 SO / 激活数据，自动校验整体大盘容量。</p>
 
-        // Activate target button
-        event.currentTarget.classList.add('active');
-    }
-</script>
+        <!-- 全局参数输入 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 bg-amber-50 p-4 rounded-xl border border-amber-200">
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">塞军年大盘 (台)</label>
+                <input id="total-market" type="number" value="1500000" oninput="calculateCalibrator()" class="w-full p-2 border rounded text-sm font-bold text-slate-800">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">我方年销量目标 (台)</label>
+                <input id="our-target" type="number" value="650000" oninput="calculateCalibrator()" class="w-full p-2 border rounded text-sm font-bold text-sky-700">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">汇率 (XOF / USD)</label>
+                <input id="exchange-rate" type="number" value="600" oninput="calculateCalibrator()" class="w-full p-2 border rounded text-sm text-slate-800">
+            </div>
+        </div>
 
+        <!-- 动态表格 -->
+        <div class="overflow-x-auto mb-4">
+            <table class="w-full text-xs text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-100 text-slate-700 border-b">
+                        <th class="p-2 border">机型线</th>
+                        <th class="p-2 border">含税 RRP ($)</th>
+                        <th class="p-2 border">年度 SO 目标 (台)</th>
+                        <th class="p-2 border">自动对位价位段</th>
+                        <th class="p-2 border">占我方内盘比例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p-2 border font-bold">POP 入门系列</td>
+                        <td class="p-2 border">$75</td>
+                        <td class="p-2 border"><input type="number" value="200000" class="input-so w-24 p-1 border rounded" oninput="calculateCalibrator()"></td>
+                        <td class="p-2 border text-sky-700 font-semibold">P1 入门智能</td>
+                        <td class="p-2 border ratio-val">--%</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border font-bold">SPARK 主力系列</td>
+                        <td class="p-2 border">$110</td>
+                        <td class="p-2 border"><input type="number" value="300000" class="input-so w-24 p-1 border rounded" oninput="calculateCalibrator()"></td>
+                        <td class="p-2 border text-sky-700 font-semibold">P2 底座主力</td>
+                        <td class="p-2 border ratio-val">--%</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border font-bold">CAMON 影像系列</td>
+                        <td class="p-2 border">$240</td>
+                        <td class="p-2 border"><input type="number" value="120000" class="input-so w-24 p-1 border rounded" oninput="calculateCalibrator()"></td>
+                        <td class="p-2 border text-emerald-700 font-semibold">P4 中高端</td>
+                        <td class="p-2 border ratio-val">--%</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border font-bold">PHANTOM 旗舰系列</td>
+                        <td class="p-2 border">$550</td>
+                        <td class="p-2 border"><input type="number" value="30000" class="input-so w-24 p-1 border rounded" oninput="calculateCalibrator()"></td>
+                        <td class="p-2 border text-purple-700 font-semibold">P5 高端</td>
+                        <td class="p-2 border ratio-val">--%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 汇总结果 Display -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border">
+            <div>
+                <span class="text-xs text-slate-500">机型 SO 动态合计：</span>
+                <span id="sum-so" class="text-lg font-bold text-slate-800">0</span> 台
+            </div>
+            <div>
+                <span class="text-xs text-slate-500">预估大盘总市占率：</span>
+                <span id="share-so" class="text-lg font-bold text-sky-700">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 Footer -->
+    <div class="text-center text-xs text-slate-400 py-4 border-t mt-6">
+        塞内加尔消费者地图 · 2026年8月 · 基于《用户洞察GTM操盘策略》四阶段方法论构建 | 估算数据仅供决策参考
+    </div>
+
+    <!-- 交互脚本 -->
+    <script>
+        function switchTab(tabId) {
+            // 隐藏所有 tab 内容
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(el => el.classList.remove('active'));
+
+            // 取消所有按钮 active 状态
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(el => el.classList.remove('active'));
+
+            // 显示当前 tab
+            document.getElementById(tabId).classList.add('active');
+
+            // 激活当前按钮
+            event.currentTarget.classList.add('active');
+        }
+
+        function calculateCalibrator() {
+            const inputs = document.querySelectorAll('.input-so');
+            let sum = 0;
+            inputs.forEach(input => {
+                sum += Number(input.value) || 0;
+            });
+
+            document.getElementById('sum-so').innerText = sum.toLocaleString();
+
+            const totalMarket = Number(document.getElementById('total-market').value) || 1;
+            const share = ((sum / totalMarket) * 100).toFixed(1);
+            document.getElementById('share-so').innerText = share + '%';
+
+            // 更新比例列
+            const ratioCells = document.querySelectorAll('.ratio-val');
+            inputs.forEach((input, idx) => {
+                const val = Number(input.value) || 0;
+                const ratio = sum > 0 ? ((val / sum) * 100).toFixed(1) : '0';
+                ratioCells[idx].innerText = ratio + '%';
+            });
+        }
+
+        // 初始化计算一次
+        calculateCalibrator();
+    </script>
 </body>
 </html>
