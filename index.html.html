@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>塞内加尔消费者地图 | 用户洞察与 GTM 操盘</title>
+    <style>
+        :root {
+            --primary-color: #00805b; /* 塞内加尔绿 */
+            --secondary-color: #e31b23; /* 塞内加尔红 */
+            --accent-color: #fdef42; /* 塞内加尔黄 */
+            --bg-color: #f4f6f8;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #00563f 0%, #00805b 100%);
+            color: white;
+            padding: 28px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 0 0 16px 0;
+            opacity: 0.9;
+            font-size: 15px;
+        }
+
+        .header-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .metric-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Tabs System */
+        .tabs-nav {
+            display: flex;
+            gap: 8px;
+            background: var(--card-bg);
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary-color);
+            background: rgba(0, 128, 91, 0.05);
+        }
+
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards & Tables */
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 20px;
+            border-bottom: 2px solid rgba(0,128,91,0.1);
+            padding-bottom: 8px;
+        }
+
+        .card h3 {
+            font-size: 16px;
+            color: var(--text-main);
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tag-est { background: #e0f2fe; color: #0369a1; }
+        .tag-real { background: #dcfce7; color: #15803d; }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .feature-box {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary-color);
+            padding: 14px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 12px;
+        }
+
+        .feature-box h4 {
+            margin: 0 0 4px 0;
+            font-size: 15px;
+        }
+
+        .feature-box p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header>
+        <h1>塞内加尔消费者地图 (Senegal Consumer Profile)</h1>
+        <p>基于「用户洞察 GTM 操盘」四阶段方法论 · 社会分层底座 × 价位段前置约束 × 现金流节奏 × 三圈作战单元</p>
+        <div class="header-metrics">
+            <span class="metric-badge">📅 2026年8月版</span>
+            <span class="metric-badge">👥 人口 ≈ 1,803 万 (RGPH-5)</span>
+            <span class="metric-badge">🏙️ 城镇化率 49.2%</span>
+            <span class="metric-badge">💱 1 USD ≈ 610 XOF (FCFA)</span>
+            <span class="metric-badge">📱 智能机年大盘 ≈ 180万–200万台</span>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('tab0')">0. 方法论与框架</button>
+        <button class="tab-btn" onclick="switchTab('tab1')">1. 社会分层与价位段</button>
+        <button class="tab-btn" onclick="switchTab('tab2')">2. 职业全景与现金流</button>
+        <button class="tab-btn" onclick="switchTab('tab3')">3. GTM 策略与三圈战场</button>
+        <button class="tab-btn" onclick="switchTab('tab4')">4. 数据来源与口径</button>
+    </div>
+
+    <!-- TAB 0: 方法论 -->
+    <div id="tab0" class="tab-content active">
+        <div class="card">
+            <h2>0. 方法论锚：塞内加尔地图的构建逻辑</h2>
+            <p>坚决遵循<b>“价位段是消费者地图的根本约束”</b>，杜绝脱离价格谈人群。塞内加尔作为西非非正规经济高占比（约 85%）且拥有强侨汇经济（Remittance）的代表性市场，其人口分层不取决于单纯的“职位”，而取决于<b>现金流来源与稳定性</b>。</p>
+            
+            <h3>五步 AI 对话法落地</h3>
+            <div class="grid-3">
+                <div class="feature-box">
+                    <h4>① 分层比例</h4>
+                    <p>基于世行贫困线与国家统计局 ANSD 收入数据切分 6 层结构。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>② 典型职业</h4>
+                    <p>覆盖 Jakartaman 摩的司机、花生季农、Modou-Modou 侨眷、公务员及商界精英。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>③ 现金全景</h4>
+                    <p>重构日结、月薪、农忙季与侨汇/宗教节庆脉冲（Grand Magal / Tabaski）。</p>
+                </div>
+            </div>
+
+            <h3>华为 2.0 经验迁移：极简三维扫描</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>维度</th>
+                        <th>塞内加尔落地变量</th>
+                        <th>业务意义</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>现金流/资金来源</b></td>
+                        <td>农业 / 城市非正规 / 领薪 / 商业 / <b>海外侨汇 (Modou-Modou)</b></td>
+                        <td>替代虚无的“职业标签”，侨汇为塞内加尔独特的高额购买力注入点。</td>
+                    </tr>
+                    <tr>
+                        <td><b>价位段前置</b></td>
+                        <td>6 档 ($10 功能机 → $400+ 高端机)</td>
+                        <td>根本约束，所有人群必须挂挂钩至对应价位段。</td>
+                    </tr>
+                    <tr>
+                        <td><b>地理/渠道浓度</b></td>
+                        <td>大达喀尔 (Dakar) / 圣路易 (Saint-Louis) / 图巴 (Touba) / 瓦洛 (Thies/Kaolack) / 卡萨芒斯 (Ziguinchor)</td>
+                        <td>达喀尔占全国购买力 >50%；图巴为宗教与商业高现金流孤岛。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TAB 1: 社会分层与价位段 -->
+    <div id="tab1" class="tab-content">
+        <div class="card">
+            <h2>1. 塞内加尔就业人口六层结构与手机消费映射</h2>
+            <p>塞内加尔非正规就业占比达 85.8%，领薪雇员仅占劳动力 12% 左右。<b>Wave 与 Orange Money 极高渗透率</b>显著降低了金融门槛。</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>层级</th>
+                        <th>人口占比与规模</th>
+                        <th>月收入 (USD / XOF)</th>
+                        <th>手机预算上限</th>
+                        <th>换机周期</th>
+                        <th>主力存量机型</th>
+                        <th>支付方式特征</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>L1 贫困层</b><br><small>农村自给/季节农</small></td>
+                        <td>≈ 38%<br>(约 685 万人)</td>
+                        <td>&lt; $40<br>(&lt; 25,000 XOF) <span class="tag tag-est">估算</span></td>
+                        <td>$10–25<br>(P0 功能机)</td>
+                        <td>4–5 年</td>
+                        <td>功能机 (itel / TECNO T-series)、二手按键机</td>
+                        <td>全款现金 / 现货交易</td>
+                    </tr>
+                    <tr>
+                        <td><b>L2 温饱层</b><br><small>城市非正规谋生</small></td>
+                        <td>≈ 32%<br>(约 577 万人)</td>
+                        <td>$40–120<br>(25,000–73,000 XOF) <span class="tag tag-real">实测</span></td>
+                        <td>$50–90<br>(P1 入门智能机)</td>
+                        <td>3–4 年</td>
+                        <td>二手安卓、TECNO POP、itel A系列、Infinix Smart</td>
+                        <td>Wave / Orange Money / 每日攒钱</td>
+                    </tr>
+                    <tr>
+                        <td><b>L3 小康层</b><br><small>基层领薪+小商户</small></td>
+                        <td>≈ 18%<br>(约 325 万人)</td>
+                        <td>$120–280<br>(73,000–170,000 XOF) <span class="tag tag-real">实测</span></td>
+                        <td>$90–160<br>(P2-P3 腰部量产机)</td>
+                        <td>2.5–3 年</td>
+                        <td>TECNO Spark / Infinix Hot / Samsung A05/A15</td>
+                        <td>Wave 转账 / 发薪日分期购买</td>
+                    </tr>
+                    <tr>
+                        <td><b>L4 中产层</b><br><small>专业白领+侨眷中层</small></td>
+                        <td>≈ 8.5%<br>(约 153 万人)</td>
+                        <td>$280–600<br>(170,000–366,000 XOF) <span class="tag tag-real">实测</span></td>
+                        <td>$160–300<br>(P3-P4 中高端)</td>
+                        <td>2–2.5 年</td>
+                        <td>TECNO Camon / Infinix Note / Samsung A25/A35 / 二手iPhone</td>
+                        <td>银行卡 + Wave + 信用卡/分期</td>
+                    </tr>
+                    <tr>
+                        <td><b>L5 富裕层</b><br><small>大进出口商+中高管</small></td>
+                        <td>≈ 3.0%<br>(约 54 万人)</td>
+                        <td>$600–2,000<br>(366,000–1,220,000 XOF) <span class="tag tag-est">估算</span></td>
+                        <td>$300–600<br>(P5 次旗舰/旗舰)</td>
+                        <td>1.5–2 年</td>
+                        <td>iPhone 14/15、Samsung Galaxy S系列、TECNO Phantom</td>
+                        <td>银行转账 / 美元/欧元现金</td>
+                    </tr>
+                    <tr>
+                        <td><b>L6 大资产层</b><br><small>政商精英/海外资本</small></td>
+                        <td>≈ 0.5%<br>(约 9 万人)</td>
+                        <td>$2,000+<br>(&gt; 1,220,000 XOF) <span class="tag tag-est">估算</span></td>
+                        <td>$800+<br>(顶配旗舰)</td>
+                        <td>1 年 (跟代)</td>
+                        <td>iPhone Pro Max / Galaxy Ultra / 折叠屏</td>
+                        <td>法国/境外直接购买</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="feature-box">
+                <b>关键消费约束：</b>塞内加尔家庭食品支出约占 <b>48.3%</b>（农村超 55%）。流量资费约为 <b>$1.2–1.8 / GB</b>（远低于几内亚），TikTok 和 WhatsApp 渗透率极高，<b>对大屏幕、好摄像头、大电池和流畅网络体验有强烈的显性需求</b>。
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: 职业全景与现金流 -->
+    <div id="tab2" class="tab-content">
+        <div class="card">
+            <h2>2. 职业全景：塞内加尔人群的 5 大现金流节奏</h2>
+            <p>在塞内加尔做 GTM 促销排期，必须紧扣以下五类资金到手的时间节点：</p>
+            
+            <div class="grid-2">
+                <div class="card" style="border-left: 4px solid #00805b;">
+                    <h3>1. 日结型 (Daily Cash)</h3>
+                    <p><b>典型职业：</b>Jakartaman 摩的司机、街头小贩 (Marchand Ambulant)、渔民、家政工。</p>
+                    <p><b>特征：</b>每天到手 3,000–8,000 XOF。钱随时有，但极难攒大钱。</p>
+                    <p><b>购买痛点：</b>手机续航 (整天在外)、超高音量、耐摔、闪充。依赖 Wave 小额蓄水攒钱买机。</p>
+                </div>
+
+                <div class="card" style="border-left: 4px solid #e31b23;">
+                    <h3>2. 周结型 (Weekly Cash)</h3>
+                    <p><b>典型职业：</b>建筑小工、木工、汽车修理工、物流搬运工。</p>
+                    <p><b>特征：</b>周六结算工资。周六晚至周日是线下零售与体验店的关键转化窗口。</p>
+                </div>
+
+                <div class="card" style="border-left: 4px solid #fdef42;">
+                    <h3>3. 月末发薪型 (Payday Wave)</h3>
+                    <p><b>典型职业：</b>教师、护士、政府公务员、电信/银行白领。</p>
+                    <p><b>特征：</b>全国约 200 万人有确定发薪日（25日–次月2日）。<b>唯一能用公历日历做发薪日营销 (Payday Campaign) 的人群。</b></p>
+                </div>
+
+                <div class="card" style="border-left: 4px solid #0284c7;">
+                    <h3>4. 农业/季节性爆发 (Harvest Surge)</h3>
+                    <p><b>典型职业：</b>花生 (Arachide) 种植农户、腰果农、沿海捕鱼船主。</p>
+                    <p><b>特征：</b>每年 12 月至次年 3 月为花生收购季（Campagne Arachidière），集中释放全年的手机换购资金。</p>
+                </div>
+
+                <div class="card" style="border-left: 4px solid #7c3aed; grid-column: span 2;">
+                    <h3>5. 侨汇与宗教节庆脉冲 (Remittance & Religious Surge) ⭐ 塞内加尔最大特色</h3>
+                    <p><b>核心人群：</b>Modou-Modou（欧美/旅法侨民）国内家眷、宗教信徒。</p>
+                    <p><b>爆发节点：</b>
+                        <ul>
+                            <li><b>Grand Magal de Touba (图巴大麦加朝圣)：</b>数百万信徒汇聚图巴，侨汇与本地消费双重爆发，高端与中端手机销售旺季。</li>
+                            <li><b>Tabaski (宰牲节) & Korité (开斋节)：</b>海外侨胞通过 Wave / Western Union 大举汇款，全家换新机。</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: GTM 策略与三圈战场 -->
+    <div id="tab3" class="tab-content">
+        <div class="card">
+            <h2>3. GTM 作战策略与三圈作战单元</h2>
+            <p>结合 TECNO / Infinix 国家盘总体目标：<b>底部守量 ($50–110) · 腰部抢量 ($110–200) · 中高端要利 ($200+)</b>。</p>
+
+            <h3>塞内加尔三圈作战单元</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>作战圈层</th>
+                        <th>核心覆盖区域</th>
+                        <th>目标人群结构</th>
+                        <th>主攻价位段与机型</th>
+                        <th>核心渠道与传播触点</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>原点圈 (Core)</b><br>高话语权与溢价区</td>
+                        <td>Dakar 核心区 (Plateau, Almadies, Mermoz, UCAD 大学城)</td>
+                        <td>L4-L6 中产及精英、大学青年、海归白领</td>
+                        <td><b>$200–400+</b><br>(Camon / Note / Phantom / Galaxy A35+)</td>
+                        <td>Shopping Mall 专卖店、TikTok 品牌KOL、Instagram、校园社团活动</td>
+                    </tr>
+                    <tr>
+                        <td><b>辐射圈 (Radiant)</b><br>高密度跑量区</td>
+                        <td>大达喀尔郊区 (Pikine, Guédiawaye, Rufisque) + Thiès (蒂斯)</td>
+                        <td>L2-L3 城市小康、年轻工薪族、个体商户</td>
+                        <td><b>$110–200</b><br>(Spark / Hot / Galaxy A05-A15)</td>
+                        <td>街区路演、Wave / Orange 代理网点、KOC 短视频、WhatsApp 导购群</td>
+                    </tr>
+                    <tr>
+                        <td><b>扩容圈 (Expansion)</b><br>现金爆发与大盘守量区</td>
+                        <td>Touba (图巴), Kaolack (考拉克), Saint-Louis (圣路易), Ziguinchor (齐金绍尔)</td>
+                        <td>L1-L2 农村与小镇居民、花生季农户、朝圣人口</td>
+                        <td><b>$50–110</b><br>(POP / itel / Smart)</td>
+                        <td>每周集市 (Marché Hebdomadaire)、传统户外墙体广告、本地电台 (RTS/RFM)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Delta 人心机会 (未被满足的诉求)</h3>
+            <div class="grid-2">
+                <div class="feature-box">
+                    <h4>📸 人像美颜与暗光社媒拍照</h4>
+                    <p>塞内加尔青年极度热爱在 TikTok / Instagram 展示时尚与舞蹈，对深肤色人像优化、夜景人像拍摄有极高溢价认同。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>⚡ 快充与持久耐用</h4>
+                    <p>针对摩的司机与经常出差的商人，33W/45W 闪充 + 5000mAh 电池是击穿对手的关键卖点。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: 数据来源与口径 -->
+    <div id="tab4" class="tab-content">
+        <div class="card">
+            <h2>4. 数据来源与口径标注 (Data Sources & Methodology Notes)</h2>
+            <p>为保证本消费者地图的数据严谨性与操盘可校验性，相关数据分为<b>【实测/官方权威数据】</b>与<b>【建模估算数据】</b>两类：</p>
+
+            <h3>1. 官方与机构实测数据 (Real Data)</h3>
+            <ul>
+                <li><b>人口总数与城镇化率：</b>源自塞内加尔国家统计与人口局 (ANSD) 第五次全国人口普查结果 (RGPH-5, 2023/2024)，全国人口约 1,803 万，城镇化率约为 49.2%。</li>
+                <li><b>贫困率与恩格尔系数：</b>源自世界银行 <i>Senegal Poverty & Equity Brief (2024)</i> 及 ANSD <i>EHCVM (家庭生活条件调查)</i>，全国贫困率 ($3.65/天标准) 约为 36.3%–38%，食品支出占比全国均值 48.3%。</li>
+                <li><b>就业结构与非正规比例：</b>源自国际劳工组织 (ILO) 与 ANSD <i>Enquête Nationale sur l'Emploi au Sénégal (ENES)</i>，非正规就业占总就业人口的 85.8%。</li>
+                <li><b>电信资费与移动支付：</b>源自 ARTP (塞内加尔电信邮政监管局) 季度报告与 GSMA Mobile Economy Report 2025，Wave 与 Orange Money 覆盖率超 80%。</li>
+            </ul>
+
+            <h3>2. 建模估算数据 (Estimated Data)</h3>
+            <ul>
+                <li><b>智能机年大盘 (≈180万–200万台)：</b>基于西非三区 (Senegal, Mali, Guinea) 品牌激活数据 (Sell-out/Activation)、海关进口数据以及 Canal/Retail 渠道实测回校验推算。</li>
+                <li><b>六层人口比例与收入区间：</b>结合世行收入阶梯划分、塞内加尔最低保障工资 (SMIG, 约 36,000 XOF/月)、教师/公务员薪资指南以及大达喀尔地区实际生活成本建模推算。</li>
+                <li><b>价位段容量划分：</b>基于市场主流品牌（TECNO, Infinix, Samsung, Apple, Xiaomi, itel）在塞内加尔大盘的实际出货量分布归纳。</li>
+            </ul>
+
+            <h3>3. 汇率与计算基准</h3>
+            <p><b>基准汇率：</b>1 USD ≈ 610 XOF (西非法郎 FCFA)，取 2026 年市场平均基准水平。</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>塞内加尔消费者地图 · 基于用户洞察 GTM 操盘方法论 | 2026年8月</p>
+    </footer>
+</div>
+
+<script>
+    function switchTab(tabId) {
+        // Hide all tabs
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(content => content.classList.remove('active'));
+
+        // Deactivate all buttons
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        // Show target tab
+        document.getElementById(tabId).classList.add('active');
+
+        // Activate target button
+        event.currentTarget.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
